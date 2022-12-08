@@ -70,6 +70,7 @@ static const struct arg args[] = {
 	{ netspeed_tx, "[ %8s] ",    "wlp2s0" },
 	{ ram_perc, "[ %3s%] ",      NULL},
 	{ cpu_perc, "[ %3s%] ",      NULL},
-	{ temp, "[ %3s°C] ",        "/sys/class/thermal/thermal_zone5/temp"},
+	{ temp, "[ %3s°C] ",        "/sys/class/thermal/thermal_zone5/temp"},
+	{ battery_perc, "[ %3s%] ",	     "BAT0"},
 	{ datetime, "%s",            "%F %T" },
 };
