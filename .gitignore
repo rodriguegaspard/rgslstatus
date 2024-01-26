@@ -3,3 +3,6 @@
 
 # Executable
 slstatus
+
+# CCLS cache
+.ccls-cache
