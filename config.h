@@ -83,7 +83,6 @@ static const struct arg args[] = {
 	{ cpu_perc,           "[󰍛 %3s%] ",      NULL },
 	{ temp,               "[ %3s°C] ",     "/sys/class/thermal/thermal_zone5/temp" },
 	{ battery_perc,       "[ %3s%] ",	    "BAT0" },
-	{ battery_remaining,  "[ %7s] ",	      "BAT0" },
 	{ datetime,           "%s ",            "%F %T" },
   { battery_notify,     "",               "BAT0" },
 };
