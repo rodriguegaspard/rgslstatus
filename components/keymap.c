@@ -29,8 +29,8 @@ get_layout(char *syms, int grp_num)
 	int grp;
 
 	layout = NULL;
-	tok = strtok(syms, "+:");
-	for (grp = 0; tok && grp <= grp_num; tok = strtok(NULL, "+:")) {
+	tok = strtok(syms, "+:_");
+	for (grp = 0; tok && grp <= grp_num; tok = strtok(NULL, "+:_")) {
 		if (!valid_layout_or_variant(tok)) {
 			continue;
 		} else if (strlen(tok) == 1 && isdigit(tok[0])) {
@@ -50,7 +50,8 @@ keymap(const char *unused)
 	Display *dpy;
 	XkbDescRec *desc;
 	XkbStateRec state;
-	char *symbols, *layout;
+	char *symbols;
+	const char *layout;
 
 	layout = NULL;
 
@@ -74,7 +75,7 @@ keymap(const char *unused)
 		warn("XGetAtomName: Failed to get atom name");
 		goto end;
 	}
-	layout = (char *)bprintf("%s", get_layout(symbols, state.group));
+	layout = bprintf("%s", get_layout(symbols, state.group));
 	XFree(symbols);
 end:
 	XkbFreeKeyboard(desc, XkbSymbolsNameMask, 1);
