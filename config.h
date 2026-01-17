@@ -9,22 +9,32 @@ static const char unknown_str[] = "n/a";
 /* maximum output string length */
 #define MAXLEN 2048
 
+/* battery levels to notify - add any levels you want to receive notification for (in percent) */
+const int notifiable_levels[] = {
+    20,
+    10,
+    5,
+};
+const size_t notifiable_levels_count = sizeof(notifiable_levels) / sizeof(notifiable_levels[0]);
+
 /*
  * function            description                     argument (example)
  *
  * battery_perc        battery percentage              battery name (BAT0)
  *                                                     NULL on OpenBSD/FreeBSD
- * battery_state       battery charging state          battery name (BAT0)
- *                                                     NULL on OpenBSD/FreeBSD
+ * battery_notify      linux battery notifications     battery name (BAT0)
+ *                                                     OpenBSD/FreeBSD not supported
  * battery_remaining   battery remaining HH:MM         battery name (BAT0)
  *                                                     NULL on OpenBSD/FreeBSD
+ * battery_state       battery charging state          battery name (BAT0)
+ *                                                     NULL on OpenBSD/FreeBSD
  * cat                 read arbitrary file             path
- * cpu_perc            cpu usage in percent            NULL
  * cpu_freq            cpu frequency in MHz            NULL
+ * cpu_perc            cpu usage in percent            NULL
  * datetime            date and time                   format string (%F %T)
  * disk_free           free disk space in GB           mountpoint path (/)
  * disk_perc           disk usage in percent           mountpoint path (/)
- * disk_total          total disk space in GB          mountpoint path (/")
+ * disk_total          total disk space in GB          mountpoint path (/)
  * disk_used           used disk space in GB           mountpoint path (/)
  * entropy             available entropy               NULL
  * gid                 GID of current user             NULL
@@ -56,23 +66,24 @@ static const char unknown_str[] = "n/a";
  *                                                     thermal zone on FreeBSD
  *                                                     (tz0, tz1, etc.)
  * uid                 UID of current user             NULL
+ * up                  interface is running            interface name (eth0)
  * uptime              system uptime                   NULL
  * username            username of current user        NULL
  * vol_perc            OSS/ALSA volume in percent      mixer file (/dev/mixer)
  *                                                     NULL on OpenBSD/FreeBSD
- * wifi_perc           WiFi signal in percent          interface name (wlan0)
  * wifi_essid          WiFi ESSID                      interface name (wlan0)
+ * wifi_perc           WiFi signal in percent          interface name (wlan0)
  */
 
 static const struct arg args[] = {
 	/* function format          argument */
 	{ netspeed_rx,        "[ %8s] ",       "wlp2s0" },
 	{ netspeed_tx,        "[ %8s] ",       "wlp2s0" },
-	{ ram_perc,           "[ %3s%] ",      NULL},
-	{ cpu_perc,           "[󰍛 %3s%] ",      NULL},
-	{ temp,               "[ %3s°C] ",     "/sys/class/thermal/thermal_zone5/temp"},
-	{ battery_perc,       "[ %3s%] ",	    "BAT0"},
-	{ battery_remaining,  "[ %7s] ",	      "BAT0"},
+	{ ram_perc,           "[ %3s%] ",      NULL },
+	{ cpu_perc,           "[󰍛 %3s%] ",      NULL },
+	{ temp,               "[ %3s°C] ",     "/sys/class/thermal/thermal_zone5/temp" },
+	{ battery_perc,       "[ %3s%] ",	    "BAT0" },
+	{ battery_remaining,  "[ %7s] ",	      "BAT0" },
 	{ datetime,           "%s ",            "%F %T" },
-  {battery_notify,      "",               "BAT0"}
+  { battery_notify,     "",               "BAT0" },
 };
